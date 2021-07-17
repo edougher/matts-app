@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from "react";
 import { Card, CardContent, Typography } from "@material-ui/core";
+import ProgressBar from "../ProgressBar/ProgressBar.js";
 
 import useStyles from "./styles";
 import moment from 'moment'
@@ -37,14 +38,15 @@ const TaskCard = () => {
     
       <Card className={classes.root} align="center">
         <CardContent className={classes.header}>
-        <Typography>{currentTime}</Typography>
+        <Typography variant="h1">{currentTime}</Typography>
         </CardContent>
         <CardContent className={classes.main}>
-          <Typography>Main</Typography>
+          <Typography variant="h3">Main</Typography>
         </CardContent>
         <CardContent className={classes.footer}>
-          <Typography alignCenter>Footer</Typography>
+          <Typography aligncenter variant="h1">Footer</Typography>
       </CardContent>
+      <ProgressBar />
       <button onClick={stopTimer}>Stop</button>
       </Card>
   );

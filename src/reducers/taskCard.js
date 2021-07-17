@@ -1,9 +1,8 @@
-const taskCardReducer = (state, action) => {
+const taskCardReducer = (state=[], action) => {
     switch (action.type) {
         // eslint-disable-next-line no-undef
         case 'NEW_TASK':
-            debugger
-            return state
+            return [...state, action.data]
         default:
             return state
     }

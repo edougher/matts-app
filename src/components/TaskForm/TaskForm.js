@@ -1,34 +1,49 @@
 import React, { useState } from "react";
-import { TextField, Typography, Button, Paper } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { createTask } from "../../actions/newTask";
+import {
+  TextField,
+  Typography,
+  Button,
+  Paper,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+} from "@material-ui/core";
 
 import useStyles from "./styles";
 
+const colors = ["red", "orange", "green", "yellow", "blue", "indigo", "violet"];
 
 const TaskForm = () => {
   const classes = useStyles();
-  const today = new Date()
-  const h = today.getHours()
-  const m = today.getMinutes()
-  const minutesPlusThirty = m + 30
-  const currentTime = `${h + ":" + m}`
-  let defaultEndTime = `${h + ":" + minutesPlusThirty}`
-
-
+  const dispatch = useDispatch();
+  // const today = new Date();
+  // const h = today.getHours();
+  // const m = today.getMinutes();
+  // const minutesPlusThirty = m + 30;
+  // const currentTime = `${h + ":" + m}`;
+  // let defaultEndTime = `${h + ":" + minutesPlusThirty}`;
+  
   const [formData, setformData] = useState({
     task: "",
-    startTime: currentTime,
-    endTime: defaultEndTime,
+    startTime: "",
+    endTime: "",
+    color: "red",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    
-    console.log(currentTime);
-    console.log(formData);
+    dispatch(createTask(formData));
+    //setTasks([...tasks, formData]);
+    // console.log(tasks);
+    // console.log(currentTime);
+    // console.log(formData);
   };
 
   const clear = () => {};
+
   return (
     <Paper className={classes.paper}>
       <form
@@ -50,7 +65,6 @@ const TaskForm = () => {
           id="startTime"
           label="Start Time"
           type="time"
-          defaultValue={currentTime}
           InputLabelProps={{
             shrink: true,
           }}
@@ -65,7 +79,6 @@ const TaskForm = () => {
           id="endTime"
           label="End Time"
           type="time"
-          defaultValue={defaultEndTime}
           InputLabelProps={{
             shrink: true,
           }}
@@ -76,6 +89,25 @@ const TaskForm = () => {
             setformData({ ...formData, endTime: e.target.value });
           }}
         />
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="demo-simple-select-outlined-label">Color</InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            value={formData.color}
+            onChange={(e) => {
+              setformData({ ...formData, color: e.target.value });
+            }}
+            label="Color"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {colors.map((color) => {
+              return <MenuItem value={color}>{color}</MenuItem>;
+            })}
+          </Select>
+        </FormControl>
         <Button
           className={classes.buttonSubmit}
           variant="contained"
